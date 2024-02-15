@@ -1,0 +1,2 @@
+# Pengujian API (klik Send Request)
+GET http://localhost:5000/masyarakats
