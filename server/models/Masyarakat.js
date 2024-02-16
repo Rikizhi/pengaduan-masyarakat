@@ -30,7 +30,7 @@ const Masyarakat = db.define(
 
 export default Masyarakat;
 
-// akan generate tabel, jika tabel tidak ada di dalam database
+// menerapkan perubahan ke dalam database
 (async () => {
   await db.sync();
 })();
