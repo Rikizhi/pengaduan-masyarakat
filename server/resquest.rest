@@ -1,2 +1,78 @@
 # Pengujian API (klik Send Request)
-GET http://localhost:5000/masyarakats
+
+# API Masyarakat
+GET http://localhost:5000/get-masyarakat/1
+
+###
+GET http://localhost:5000/get-all-masyarakat
+
+###
+POST http://localhost:5000/insert-masyarakat
+Content-Type: application/json
+
+{
+   "nik": "3273902710050007",
+   "nama": "aria",
+   "username": "ariamzah",
+   "password": "aria",
+   "telp": "089719332026"
+}
+
+# API Petugas
+###
+GET http://localhost:5000/get-petugas/1
+
+###
+GET http://localhost:5000/get-all-petugas
+
+###
+POST http://localhost:5000/insert-petugas
+Content-Type: application/json
+
+{
+   "id_petugas": "",
+   "nama_petugas": "aimi",
+   "username": "aimyon",
+   "password": "aimyon",
+   "telp": "089419335401",
+   "level": "admin"
+}
+
+# API Pengaduan
+###
+GET http://localhost:5000/get-pengaduan/1
+
+###
+GET http://localhost:5000/get-all-pengaduan
+
+###
+POST http://localhost:5000/insert-pengaduan
+Content-Type: application/json
+
+{
+   "id_pengaduan": "",
+   "tgl_pengaduan": "2024-02-04",
+   "nik": "",
+   "isi_laporan": "laporan pengaduan masyarakat",
+   "foto": "pengaduan.jpg",
+   "status": "selesai" 
+}
+
+# API Tanggapan
+###
+GET http://localhost:5000/get-tanggapan/1
+
+###
+GET http://localhost:5000/get-all-tanggapan
+
+###
+POST http://localhost:5000/insert-tanggapan
+Content-Type: application/json
+
+{
+   "id_tanggapan": "",
+   "id_pengaduan": "",
+   "tgl_tanggapan": "2024-02-04",
+   "tanggapan": "pelaporan diterima dan akan ditindak lanjuti",
+   "id_petugas": "",
+}

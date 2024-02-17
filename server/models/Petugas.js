@@ -9,6 +9,7 @@ const Petugas = db.define(
     id_petugas: {
       type: DataTypes.INTEGER,
       primaryKey: true,
+      autoIncrement: true,
     },
     nama_petugas: {
       type: DataTypes.STRING(35),
