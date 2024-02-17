@@ -1,5 +1,5 @@
 import { Sequelize } from "sequelize";
-import db from "../config/Database";
+import db from "../config/Database.js";
 
 const { DataTypes } = Sequelize;
 
@@ -7,20 +7,20 @@ const Petugas = db.define(
   "petugas",
   {
     id_petugas: {
-      type: DataTypes.INT(11),
+      type: DataTypes.INTEGER,
       primaryKey: true,
     },
     nama_petugas: {
-      type: DataTypes.VARCHAR(35),
+      type: DataTypes.STRING(35),
     },
     username: {
-      type: DataTypes.VARCHAR(25),
+      type: DataTypes.STRING(25),
     },
     password: {
-      type: DataTypes.VARCHAR(32),
+      type: DataTypes.STRING(32),
     },
     telp: {
-      type: DataTypes.VARCHAR(13),
+      type: DataTypes.STRING(13),
     },
     level: {
       type: DataTypes.ENUM("admin", "petugas"),

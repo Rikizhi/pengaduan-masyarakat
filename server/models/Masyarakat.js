@@ -4,7 +4,7 @@ import db from "../config/Database.js";
 const { DataTypes } = Sequelize;
 
 const Masyarakat = db.define(
-  "masyarakats",
+  "masyarakat",
   {
     nik: {
       type: DataTypes.CHAR(16),

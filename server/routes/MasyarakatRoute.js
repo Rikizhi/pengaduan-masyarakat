@@ -1,7 +1,7 @@
 import express from "express";
-import { getMasyarakats } from "../controllers/masyarakat.js";
+import { getMasyarakat } from "../controllers/masyarakat.js";
 
 const router = express.Router();
-router.get("/masyarakats", getMasyarakats);
+router.get("/masyarakat", getMasyarakat);
 
 export default router;
