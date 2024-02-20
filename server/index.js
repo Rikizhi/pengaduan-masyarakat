@@ -8,13 +8,17 @@ import TanggapanRoute from "./routes/TanggapanRoute.js";
 
 // variabel
 const app = express();
+const PORT = process.env.PORT || 5000;
+
 // middleware
 app.use(cors());
 app.use(express.json());
-app.use(MasyarakatRoute);
-app.use(PetugasRoute);
-app.use(PengaduanRoute);
-app.use(TanggapanRoute);
+app.use('/masyarakat', MasyarakatRoute);
+app.use('/petugas',PetugasRoute);
+app.use('/pengaduan',PengaduanRoute);
+app.use('/tanggapan',TanggapanRoute);
+app.get("/", (req, res) => res.json({ message: "Welcome to our API" }));
+app.use((req, res) => res.status(404).json({ success: false, message: "Not Found" }));
 
-// port
-app.listen(5000, () => console.log("Server is running from port..."));
+// listen to the port
+app.listen(5000, () => console.log(`Server is running from port ${PORT}`));
