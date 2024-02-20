@@ -7,6 +7,9 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import axios from "axios";
+import { useState } from "react";
+import { Alert, Snackbar } from "@mui/material";
 
 function Copyright(props) {
   return (
@@ -24,20 +27,114 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function Register() {
+  const [alert, setAlert] = useState({ open: false, severity: "success", message: "" });
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
+  const handleCloseAlert = () => {
+    setAlert(null);
+  };
+
+  const handleAlert = (severity, message) => {
+    setAlert({
+      severity: severity,
+      message: message,
     });
+
+    setSnackbarOpen(true);
+
+    setTimeout(() => {
+      handleCloseAlert();
+    }, 5000);
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+
+    const nik = formData.get("nik");
+    const nama = formData.get("nama");
+    const username = formData.get("username");
+    const password = formData.get("password");
+    const telp = formData.get("telp");
+
+    if (!nik || !nama || !username || !password || !telp) {
+      // Display alert for empty fields
+      handleAlert("error", "Seluruh field harus terisi!");
+      return;
+    }
+
+    if (!/^\d+$/.test(nik)) {
+      // Display alert for invalid telp
+      handleAlert("error", "Hanya dapat memasukkan nomor!");
+      return;
+    }
+
+    if (nik.length !== 16) {
+      // Display alert for invalid nik
+      handleAlert("error", "NIK harus 16 digit");
+      return;
+    }
+
+    if (nama.length > 35) {
+      // Display alert for invalid nama
+      handleAlert("error", "Nama tidak boleh lebih dari 35 karakter!");
+      return;
+    }
+
+    if (username.length > 25) {
+      // Display alert for invalid username
+      handleAlert("error", "Username tidak boleh lebih dari 25 karakter!");
+      return;
+    }
+
+    if (password.length > 32) {
+      // Display alert for invalid password
+      handleAlert("error", "Password tidak boleh lebih dari 32 karakter!");
+      return;
+    }
+
+    if (telp.length > 13) {
+      // Display alert for invalid telp
+      handleAlert("error", "Nomor Telepon tidak boleh lebih dari 13 digit");
+      return;
+    }
+
+    if (!/^\d+$/.test(telp)) {
+      // Display alert for invalid telp
+      handleAlert("error", "Hanya dapat memasukkan nomor!");
+      return;
+    }
+
+    try {
+      // Send a POST request to the server
+      const response = await axios.post("http://localhost:5000/masyarakat/insert-masyarakat", {
+        nik: formData.get("nik"),
+        nama: formData.get("nama"),
+        username: formData.get("username"),
+        password: formData.get("password"),
+        telp: formData.get("telp"),
+      });
+      console.log(response.data);
+
+      handleAlert("success", "Registrasi berhasil!");
+    } catch (error) {
+      console.error("Error submitting form:", error);
+
+      handleAlert("error", "Registrasi gagal, silakan coba lagi");
+    }
   };
 
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
+        {alert && (
+          <Snackbar open={snackbarOpen} autoHideDuration={5000} onClose={handleCloseAlert} anchorOrigin={{ vertical: "top", horizontal: "center" }}>
+            <Alert variant="filled" severity={alert.severity} onClose={handleCloseAlert} sx={{ mt: 2 }}>
+              {alert.message}
+            </Alert>
+          </Snackbar>
+        )}
         <Box
           p={4}
           boxShadow={3}
