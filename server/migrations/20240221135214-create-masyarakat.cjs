@@ -20,6 +20,14 @@ module.exports = {
       telp: {
         type: Sequelize.STRING(13),
       },
+      createdAt: {
+        type: Sequelize.DATE,
+        allowNull: false,
+      },
+      updatedAt: {
+        type: Sequelize.DATE,
+        allowNull: false,
+      },
     });
   },
 

@@ -10,6 +10,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
 import { useState } from "react";
 import { Alert, Snackbar } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 function Copyright(props) {
   return (
@@ -29,15 +30,21 @@ const defaultTheme = createTheme();
 export default function Register() {
   const [alert, setAlert] = useState({ open: false, severity: "success", message: "" });
   const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const navigate = useNavigate();
 
   const handleCloseAlert = () => {
-    setAlert(null);
+    setAlert({
+      ...alert,
+      open: false,
+    });
+    setSnackbarOpen(false);
   };
 
   const handleAlert = (severity, message) => {
     setAlert({
       severity: severity,
       message: message,
+      open: true,
     });
 
     setSnackbarOpen(true);
@@ -58,49 +65,41 @@ export default function Register() {
     const telp = formData.get("telp");
 
     if (!nik || !nama || !username || !password || !telp) {
-      // Display alert for empty fields
       handleAlert("error", "Seluruh field harus terisi!");
       return;
     }
 
     if (!/^\d+$/.test(nik)) {
-      // Display alert for invalid telp
       handleAlert("error", "Hanya dapat memasukkan nomor!");
       return;
     }
 
     if (nik.length !== 16) {
-      // Display alert for invalid nik
       handleAlert("error", "NIK harus 16 digit");
       return;
     }
 
     if (nama.length > 35) {
-      // Display alert for invalid nama
       handleAlert("error", "Nama tidak boleh lebih dari 35 karakter!");
       return;
     }
 
     if (username.length > 25) {
-      // Display alert for invalid username
       handleAlert("error", "Username tidak boleh lebih dari 25 karakter!");
       return;
     }
 
     if (password.length > 32) {
-      // Display alert for invalid password
       handleAlert("error", "Password tidak boleh lebih dari 32 karakter!");
       return;
     }
 
     if (telp.length > 13) {
-      // Display alert for invalid telp
       handleAlert("error", "Nomor Telepon tidak boleh lebih dari 13 digit");
       return;
     }
 
     if (!/^\d+$/.test(telp)) {
-      // Display alert for invalid telp
       handleAlert("error", "Hanya dapat memasukkan nomor!");
       return;
     }
@@ -115,6 +114,8 @@ export default function Register() {
         telp: formData.get("telp"),
       });
       console.log(response.data);
+
+      navigate("/login");
 
       handleAlert("success", "Registrasi berhasil!");
     } catch (error) {
@@ -194,7 +195,7 @@ export default function Register() {
                 height: 45,
                 marginLeft: "auto",
                 marginRight: "auto",
-                display: "block", // Menangani button yang memiliki flexbox container
+                display: "flex",
               }}
             >
               Sign Up
